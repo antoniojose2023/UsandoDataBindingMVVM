@@ -2,14 +2,20 @@ package com.example.usandodatabinding.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.usandodatabinding.R
 import com.example.usandodatabinding.databinding.ActivityMainBinding
+import com.example.usandodatabinding.model.Time
 import com.example.usandodatabinding.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private lateinit var dataBinding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
     //private val mainViewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +29,14 @@ class MainActivity : AppCompatActivity() {
              //mainViewModel.getListTimes2()
         }
 
+        //Databinding
+        dataBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_main
+        )
+
+        dataBinding.time = Time(5, "Botafogo")
+        dataBinding.onClick = OnClickTime()
+
     }
 
     override fun onStart() {
@@ -34,5 +48,11 @@ class MainActivity : AppCompatActivity() {
             binding.tvResultado.text = resultado
         }
         super.onStart()
+    }
+
+    inner class OnClickTime(){
+        fun exibirTime(view: View){
+            Toast.makeText(applicationContext, "Você clicou aqui . . .", Toast.LENGTH_LONG).show()
+        }
     }
 }
